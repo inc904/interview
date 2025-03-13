@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* 按钮样式 */
+      .toggle-button {
+        cursor: pointer;
+      }
+
+      /* 文本容器父元素样式 */
+      .text-wrapper {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        /* 初始最大高度设为 0，隐藏内容 */
+        max-height: 0;
+        /* 为 max-height 添加过渡动画 */
+        transition: max-height 0.5s ease-in-out;
+      }
+
+      /* 展开状态下的样式 */
+      .text-wrapper.expanded {
+        /* 展开时最大高度设为一个足够大的值 */
+        max-height: 1000px;
+      }
+    </style>
+    <title>Expandable Text Animation</title>
+  </head>
+
+  <body>
+    <!-- 切换展开和收起的按钮 -->
+    <button class="toggle-button" onclick="toggleText()">展开/收起</button>
+    <!-- 文本容器 -->
+    <div class="text-wrapper" id="text-wrapper">
+      <p>
+        这是一段不定高度的文字。它可能会很长，也可能会很短。当你点击按钮时，这段文字会平滑地展开或收起。这是一段不定高度的文字。它可能会很长，也可能会很短。当你点击按钮时，这段文字会平滑地展开或收起。
+      </p>
+    </div>
+
+    <script>
+      function toggleText() {
+        const textWrapper = document.getElementById('text-wrapper')
+        textWrapper.classList.toggle('expanded')
+      }
+    </script>
+  </body>
+</html>

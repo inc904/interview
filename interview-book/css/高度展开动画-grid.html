@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .text-wrapper {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.5s ease-in-out;
+      }
+
+      .text-wrapper.expanded {
+        grid-template-rows: 1fr;
+      }
+
+      .text-container {
+        overflow: hidden;
+      }
+
+      .toggle-button {
+        cursor: pointer;
+      }
+    </style>
+    <title>Expandable Text Animation</title>
+  </head>
+
+  <body>
+    <button class="toggle-button" onclick="toggleText()">展开/收起</button>
+    <div class="text-wrapper" id="text-wrapper">
+      <div class="text-container">
+        <p>
+          这是一段不定高度的文字。它可能会很长，也可能会很短。当你点击按钮时，这段文字会平滑地展开或收起。这是一段不定高度的文字。它可能会很长，也可能会很短。当你点击按钮时，这段文字会平滑地展开或收起。
+        </p>
+      </div>
+    </div>
+
+    <script>
+      function toggleText() {
+        const textWrapper = document.getElementById('text-wrapper')
+        textWrapper.classList.toggle('expanded')
+      }
+    </script>
+  </body>
+</html>

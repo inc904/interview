@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>部分区域滚动示例</title>
+    <style>
+      body {
+        height: 2000px;
+        background-color: lightblue;
+      }
+
+      .scrollable {
+        height: 200px;
+        overflow-y: auto;
+        background-color: white;
+        padding: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scrollable">
+      <p>这是一个可滚动的区域。</p>
+      <p>可以在这里上下滚动查看更多内容。</p>
+      <p>这是一个可滚动的区域。</p>
+      <p>可以在这里上下滚动查看更多内容。</p>
+      <p>这是一个可滚动的区域。</p>
+      <p>可以在这里上下滚动查看更多内容。</p>
+    </div>
+    <p>这是禁止滚动的区域。</p>
+    <script>
+      // 为可滚动区域添加触摸事件监听器
+      const scrollableDiv = document.querySelector('.scrollable')
+      scrollableDiv.addEventListener('touchmove', function (e) {
+        // 为可滚动区域的触摸事件添加 _isScroller 属性并设置为 true
+        e._isScroller = true
+      })
+
+      // 为整个页面添加触摸事件监听器，禁止默认滚动行为
+      document.body.addEventListener(
+        'touchmove',
+        function (e) {
+          if (e._isScroller) return
+          e.preventDefault()
+        },
+        {
+          passive: false,
+        }
+      )
+    </script>
+  </body>
+</html>

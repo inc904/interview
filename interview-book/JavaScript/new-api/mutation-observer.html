@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="target">
+      <p>Initial content</p>
+    </div>
+    <button id="addButton">Add Element</button>
+    <button id="changeAttributeButton">Change Attribute</button>
+    <script>
+      /**
+       mutationObserver
+       监听DOM的变化
+       */
+
+      const box = document.querySelector('.box')
+      const callback = function (mutationsList, observer) {
+        for (const mutation of mutationsList) {
+          switch (mutation.type) {
+            case 'attributes':
+              console.log(
+                'The ' + mutation.attributeName + ' attribute was modified.'
+              )
+              break
+            case 'childList':
+              console.log('A child node has been added or removed.')
+              break
+            case 'characterData':
+              console.log('The character data was changed.')
+              break
+          }
+        }
+      }
+
+      const config = {
+        attributes: true, // 监听属性的变化
+        childList: true, // 监听子节点的变化
+        characterData: true, // 监听字符数据的变化
+        subtree: true, // 监听整个子树
+      }
+      const observer = new MutationObserver(callback)
+
+      const targetNode = document.getElementById('target')
+      observer.observe(targetNode, config)
+
+      const addButton = document.getElementById('addButton')
+      addButton.addEventListener('click', () => {
+        const newElement = document.createElement('p')
+        newElement.textContent = 'New element'
+        targetNode.appendChild(newElement)
+      })
+
+      const changeAttributeButton = document.getElementById(
+        'changeAttributeButton'
+      )
+      changeAttributeButton.addEventListener('click', () => {
+        targetNode.setAttribute('data-custom', 'new-value')
+      })
+
+      // observer.disconnect(); // 停止监听view
+      // observer.takeRecords() // 获取所有记录
+    </script>
+  </body>
+</html>
