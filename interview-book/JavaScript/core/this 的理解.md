@@ -6,7 +6,7 @@ this 是 js 的一个关键字，它指向当前执行上下文的对象。具�
 
 ## 2. this 的绑定规则
 
-### 2.1 默认绑定
+### 2.1 默认绑定，作为普通函数调用
 
 当函数独立调用时（即没有明确的调用对象），this 默认指向全局对象（在浏览器中时 window， 在 node.js 中时 global）。在严格模式下，this 为 undefined。
 
@@ -17,7 +17,7 @@ function foo() {
 foo() // 在浏览器中为 window，在 node.js 中为 global
 ```
 
-### 2.2 隐式绑定
+### 2.2 隐式绑定（作为对象的方法调用）
 
 当函数被某个对象调用时，this 默认指向该对象。
 
@@ -35,7 +35,31 @@ obj.foo() // Alice
 obj.bar() // ''
 ```
 
-### 2.3 显示绑定
+如果把对象的方法复制给某个变量，再调用这个变量：
+
+```js
+var obj = {
+  fun1: function(){
+    console.log(this)
+  }
+}
+var fun2 = obj.fun1
+fun2() // windows
+```
+
+此时调用fun2方法输出了window对象，说明this指向了全局对象。给fun2赋值。其实相当于：
+
+```js
+var fun2 = function(){
+  console.log(this)
+}
+```
+
+可以看出，此时的this已经跟obj没有任何关系了。这时fun2是作为普通函数调用。
+
+### 2.3 显式绑定（call()或者apply()调用）
+>
+> [JS中的apply和call](./js中的apply和call.md)
 
 通过 call、apply、bind 等方法，可以显式指定 this 的指向。
 
@@ -58,7 +82,7 @@ const greetAlice = greet.bind(alice)
 greetAlice() // hello, Alice
 ```
 
-### 2.4 new 绑定
+### 2.4 new 绑定（作为构造函数调用）
 
 当函数被 new 操作符调用时，this 默认指向该函数的实例。
 
@@ -68,6 +92,19 @@ function Person(name) {
 }
 const alice = new Person('Alice')
 console.log(alice.name) // Alice
+```
+
+如果构造函数显式的返回一个对象，那么this会指向该对象：
+
+```js
+var Person = function(){
+  this.name = 'xxx'
+  return {
+    name: 'yyy'
+  }
+}
+var p1 = new Person()
+console.log(p1.name) // yyy
 ```
 
 ### 2.5 箭头函数中的 this

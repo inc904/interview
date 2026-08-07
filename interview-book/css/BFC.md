@@ -1,3 +1,5 @@
+# BFC
+
 ## 1.BFC 概念
 
 块格式化上下文(Block Formatting Context,BFC) 是 Web 页面的可视化 css 渲染的一部分，是块盒子的布局过程发生的区域，也是浮动元素与其他元素交互的区域。(在 BFC 内部.块级元素的布局、浮动元素与其他元素的相互作用，会受到 BFC 规则的影响)
@@ -27,29 +29,44 @@
 
 ## 应用
 
-1. 清除浮动
+1. 清除浮动（解决高度塌陷）
    通过给父元素创建 BFC， 使得它包含浮动资源素，从而避免 高度塌陷
-   ```css
-   <!-- 给父元素加 class clearfix -- > .clearfix:after {
-     content: '';
-     display: block;
-     clear: both;
-     height: 0;
-     visibility: hidden;
-   }
-   .clearfix {
-     *zoom: 1;
-   }
-   ```
-2. 防止外边距合并，通过给元素创建 BFC，可以避免与相邻元素的垂直外边距合并。
 
-3. 实现多栏布局： 利用 BFC 不与浮动元素重叠的特性，实现自适应的多栏布局。
+  ```css
+    // 给父元素加 class clearfix 
+    .clearfix:after {
+      content: '';
+      display: block;
+      clear: both;
+      height: 0;
+      visibility: hidden;
+    }
+    .clearfix {
+      *zoom: 1;
+    }
+
+  ```
+
+1. 防止外边距合并，通过给元素创建 BFC，可以避免与相邻元素的垂直外边距合并。
+
+2. 实现多栏布局： 利用 BFC 不与浮动元素重叠的特性，实现自适应的多栏布局。
 
 - 非浮动元素被浮动元素覆盖
 
-4. BFC 内部元素的 margin 不会重叠
-5. BFC 顶部元素的 margin-top 不会与自身的 margin-top 重叠
+1. BFC 内部元素的 margin 不会重叠
+2. BFC 顶部元素的 margin-top 不会与自身的 margin-top 重叠
    margin 溢出问题：
    - border
    - overflow
    - BFC
+
+## 往BFC靠的问题
+
+- 子元素加了float，结果整个父元素容器高度直接消失，边框缩成一条线
+- 两个相邻的div，明明分别设置了30px和20px的margin，中间间距死活不对，只有30px
+
+## 其他格式上下文
+
+IFC: inline 行内格式化上下文
+FFC： Flex 弹性格式化上下文
+GFC：Grid 网格格式化上下文
